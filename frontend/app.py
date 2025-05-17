@@ -1,7 +1,11 @@
-import streamlit as st
+import os
 import requests
+import streamlit as st
+from dotenv import load_dotenv
 
-API_URL = "http://localhost:8000/analyze"
+load_dotenv()
+
+ENDPOINT = f"{os.getenv('BACKEND_URL')}/analyze"
 
 st.title("🎵 Genius Lyrics Decoder")
 
@@ -11,7 +15,7 @@ song_name = st.text_input("Вставьте название песни")
 if st.button("Анализировать") and artist and song_name:
     with st.spinner("Получаем текст и генерируем трактовки..."):
         resp = requests.post(
-            API_URL, json={"genius_artist_name": artist, "genius_song_name": song_name}
+            ENDPOINT, json={"genius_artist_name": artist, "genius_song_name": song_name}
         )
         if resp.status_code == 200:
             data = resp.json()

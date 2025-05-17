@@ -17,7 +17,7 @@ A powerful web application that provides deep analysis and interpretation of son
 - **FastAPI**: Modern, fast web framework for building APIs
 - **LangChain**: For structured interaction with language models
 - **Genius API**: For retrieving song lyrics
-- **Python 3.7+**: Async support and modern Python features
+- **Python 3.9+**: Async support and modern Python features
 
 ### Frontend
 - **Streamlit**: For building the interactive web interface
@@ -25,7 +25,7 @@ A powerful web application that provides deep analysis and interpretation of son
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Python 3.7 or higher
+- Python 3.9 or higher
 - Genius API token
 - LLM API access
 
@@ -52,7 +52,7 @@ GENIUS_API_TOKEN=your_genius_token_here
 
 1. Start the backend server:
 ```bash
-uvicorn backend.main:app --reload
+uvicorn backend.main:app
 ```
 
 2. Start the frontend:
