@@ -31,3 +31,8 @@ async def analyze(req: AnalyzeRequest):
         req.genius_song_name, req.genius_artist_name, lyrics
     )
     return result
+
+
+@app.get("/health")
+async def health():
+    return {"status": "ok"}
