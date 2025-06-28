@@ -52,7 +52,7 @@ GENIUS_API_TOKEN=your_genius_token_here
 
 1. Start the backend server:
 ```bash
-uvicorn backend.main:app
+python -m backend.main
 ```
 
 2. Start the frontend:
