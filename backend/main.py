@@ -1,24 +1,14 @@
 import os
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
 from dotenv import load_dotenv
 
 from .services.genius_client import GeniusClient
-from .llm.analysis import interpret_lyrics
+from .llm_services.analysis import interpret_lyrics
+from .models import AnalyzeRequest, AnalyzeResponse
 
 load_dotenv()
 app = FastAPI()
 genius = GeniusClient(os.getenv("GENIUS_API_TOKEN"))
-
-
-class AnalyzeRequest(BaseModel):
-    genius_artist_name: str
-    genius_song_name: str
-
-
-class AnalyzeResponse(BaseModel):
-    summary: str
-    line_explanations: dict
 
 
 @app.post("/analyze", response_model=AnalyzeResponse)
@@ -36,3 +26,9 @@ async def analyze(req: AnalyzeRequest):
 @app.get("/health")
 async def health():
     return {"status": "ok"}
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(app, host="0.0.0.0", port=int(os.getenv("BACKEND_PORT", 8000)))
