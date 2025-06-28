@@ -1,28 +1,23 @@
-import os
-import requests
 import streamlit as st
-from dotenv import load_dotenv
 
-load_dotenv()
+from service.analyze_service import AnylyzeService
 
-ENDPOINT = f"{os.getenv('BACKEND_URL')}/analyze"
 
-st.title("🎵 Genius Lyrics Decoder")
+async def main():
+    st.title("🎵 Genius Lyrics Decoder")
 
-artist = st.text_input("Вставьте имя исполнителя")
-song_name = st.text_input("Вставьте название песни")
+    artist = st.text_input("Вставьте имя исполнителя")
+    song_name = st.text_input("Вставьте название песни")
 
-if st.button("Анализировать") and artist and song_name:
-    with st.spinner("Получаем текст и генерируем трактовки..."):
-        resp = requests.post(
-            ENDPOINT, json={"genius_artist_name": artist, "genius_song_name": song_name}
-        )
-        if resp.status_code == 200:
-            data = resp.json()
-            st.subheader("Краткий обзор")
-            st.write(data["summary"])
-            st.subheader("Трактовки строк")
-            for line, expl in data["line_explanations"].items():
-                st.markdown(f"> {line}  \n{expl}")
-        else:
-            st.error(f"Ошибка: {resp.text}")
+    if st.button("Анализировать") and artist and song_name:
+        with st.spinner("Получаем текст и генерируем трактовки..."):
+            async with AnylyzeService() as service:
+                data = await service.analyze(artist, song_name)
+                st.subheader("Краткий обзор")
+                st.write(data["summary"])
+
+
+if __name__ == "__main__":
+    import asyncio
+
+    asyncio.run(main())
