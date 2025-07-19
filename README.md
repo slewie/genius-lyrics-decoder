@@ -59,6 +59,10 @@ python -m backend.main
 ```bash
 streamlit run frontend/app.py
 ```
+or
+```bash
+python -m frontend/bot.py
+```
 
 ## 🎯 Usage
 
